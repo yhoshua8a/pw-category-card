@@ -1,0 +1,74 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+
+
+<dom-module id="pw-category-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+  <paper-card heading="[[textImage]]" image="[[imageCard]]">
+    <div class="card-actions">
+      <iron-selector id="selected_item">
+        <template is="dom-repeat" items="{{itemsCard}}" as="item">
+          <paper-item on-tap="event" id="[[items]]">
+            [[item]]
+          </paper-item>  
+        </template>           
+      </iron-selector>
+   </div>
+ </paper-card> 
+  
+  </template>
+
+  <script>
+    /**
+     * `pw-category-card`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+
+     (function PwCategoryCardDefinition(customElement){
+         
+      `use strict`;
+
+      class PwCategoryCard extends Polymer.Element {
+      
+      static get is() { return 'pw-category-card'; }
+
+      static get properties() {
+       return {
+        itemsCard: {type: Array, value: ["item Array 1", "item Array 2", "item Array 3"]},
+        imageCard:{type: String, value:""},
+        textImage:{type: String, value:"default text image"}
+        };
+      }
+
+      event(){
+         
+        this.$.selected_item.addEventListener("selected-changed", ()=>{
+
+        this.dispatchEvent(new CustomEvent('click-item', {
+             bubbles: true,
+             composed: true,
+             detail:this.$.selected_item.selectedItem.id
+           }));
+        }); 
+
+     }
+    }
+    customElements.define(PwCategoryCard.is, PwCategoryCard);
+
+
+  })(window.customElements);
+    
+  </script>
+</dom-module>

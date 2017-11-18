@@ -12,10 +12,10 @@
       }
     </style>
     
-  <paper-card heading="[[textImage]]" image="[[imageCard]]">
+  <paper-card heading="[[text]]" image="[[image]]">
     <div class="card-actions">
       <iron-selector id="selected_item">
-        <template is="dom-repeat" items="{{itemsCard}}" as="item">
+        <template is="dom-repeat" items="{{items}}" as="item">
           <paper-item on-tap="event" id="[[items]]">
             [[item]]
           </paper-item>  
@@ -46,9 +46,9 @@
 
       static get properties() {
        return {
-        itemsCard: {type: Array, value: ["item Array 1", "item Array 2", "item Array 3"]},
-        imageCard:{type: String, value:""},
-        textImage:{type: String, value:"default text image"}
+        items: {type: Array, value:[]},
+        image:{type: String, value:""},
+        text:{type: String, value:""}
         };
       }
 

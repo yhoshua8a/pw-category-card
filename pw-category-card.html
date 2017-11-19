@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../iron-selector/iron-selector.html">
 
 
 <dom-module id="pw-category-card">
@@ -14,13 +13,11 @@
     
   <paper-card heading="[[text]]" image="[[image]]">
     <div class="card-actions">
-      <iron-selector id="selected_item">
-        <template is="dom-repeat" items="{{items}}" as="item">
-          <paper-item on-tap="event" id="[[item]]">
+        <template is="dom-repeat" items="[[items]]" as="item">
+          <paper-item on-tap="selectedCategory" data-category$="[[text]]">
             [[item]]
           </paper-item>  
         </template>           
-      </iron-selector>
    </div>
  </paper-card> 
   
@@ -35,15 +32,12 @@
      * @polymer
      * @demo demo/index.html
      */
-
      (function PwCategoryCardDefinition(customElement){
          
       `use strict`;
-
       class PwCategoryCard extends Polymer.Element {
       
       static get is() { return 'pw-category-card'; }
-
       static get properties() {
        return {
         items: {type: Array, value:[]},
@@ -52,22 +46,20 @@
         };
       }
 
-      event(){
+      selectedCategory(event){
          
-        this.$.selected_item.addEventListener("selected-changed", ()=>{
-
         this.dispatchEvent(new CustomEvent('click-item', {
              bubbles: true,
              composed: true,
-             detail:this.$.selected_item.selectedItem.id
+             detail:{
+                     "category": event.target.getAttribute("data-category"),
+                     "subCategory":event.model.item
+                  }
            }));
-        }); 
-
+        
      }
     }
     customElements.define(PwCategoryCard.is, PwCategoryCard);
-
-
   })(window.customElements);
     
   </script>
